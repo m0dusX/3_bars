@@ -43,7 +43,7 @@ def get_smallest_bar(all_bar_info):
     return all_smallest_bars
 
 def get_closest_bar(all_bar_info, longitude, latitude):
-    """Return the closes bar dict from list
+    """Return the closest bar dict from list
 
     Uses vincenty function from geopy.distance module in lambda function to
     calculate distance from user coordinates to current bar from all_bar_info
