@@ -68,13 +68,13 @@ if __name__ == '__main__':
     for idx, current_bar in enumerate(get_biggest_bar(current_json), 1):
         print("{} bar:".format(idx))
         show_info(current_bar)
-    print("Smallest bar in JSON:")
+    print("Smallests bar in JSON:")
     for idx, current_bar in enumerate(get_smallest_bar(current_json), 1):
         print("{} bar:".format(idx))
         show_info(current_bar)
     longitude = float(input("Please enter longitude: "))
     latitude = float(input("Please enter latitude: "))
-    print("Closest bar is found!")
+    print("Closest bar was found!")
     show_info(get_closest_bar(current_json, longitude, latitude))
     print("Press enter to exit the programm...")
     input()
