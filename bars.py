@@ -24,8 +24,7 @@ def get_biggest_bar(all_bar_info):
     max function & checks if there are more than one bars with max SeatsCount.
 
     """
-    get_seatscount_lambda = lambda bar: get_seatscount(bar)
-    minimum = get_seatscount(max(all_bar_info, key=get_seatscount_lambda))
+    minimum = get_seatscount(max(all_bar_info, key=lambda bar: get_seatscount(bar)))
     all_biggest_bars = [bar for bar in all_bar_info 
         if get_seatscount(bar) == minimum]
     return all_biggest_bars
@@ -40,8 +39,7 @@ def get_smallest_bar(all_bar_info):
 
     """
     bars_with_seats = [bar for bar in all_bar_info if get_seatscount(bar) > 0]
-    get_seatscount_lambda = lambda bar: get_seatscount(bar)
-    minimum = get_seatscount(min(bars_with_seats, key=get_seatscount_lambda))
+    minimum = get_seatscount(min(bars_with_seats, key=lambda bar: get_seatscount(bar)))
     all_smallest_bars= [bar for bar in all_bar_info
         if get_seatscount(bar) == minimum]
     return all_smallest_bars
@@ -55,10 +53,9 @@ def get_closest_bar(all_bar_info, longitude, latitude):
     list.
 
     """
-    vincenty_lambda = lambda bar: vincenty((longitude, latitude), 
-        (bar.get("geometry").get("coordinates")[0], 
-            bar.get("geometry").get("coordinates")[0])).miles
-    closest_bar = min(all_bar_info, key=vincenty_lambda)
+    closest_bar = min(all_bar_info, key=lambda bar: 
+    	vincenty((longitude, latitude), (bar.get("geometry").get("coordinates")[0], 
+            bar.get("geometry").get("coordinates")[0])).miles)
     return closest_bar
 
 
