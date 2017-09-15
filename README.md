@@ -29,7 +29,6 @@ Please enter longitude: <your longitude>
 Please enter latitude: <your latitude>
 
 Closest bar was found!
-
 ...
 <json data>
 ...
