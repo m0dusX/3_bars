@@ -1,6 +1,6 @@
 # Ближайшие бары
 
-[FIXME. Здесь будет описание проекта]
+Данный скрипт находит самый большой и маленький бары из JSON файла и выводит полную информацию о них. Также пользователю предлагается ввести свои координаты (широту и долготу). На их основе скрипт рассчитает самый ближайший бар к пользователю.
 
 # Как запустить
 
@@ -10,8 +10,29 @@
 
 ```#!bash
 
-$ python bars.py # possibly requires call of python3 executive instead of just python
-# FIXME вывести пример ответа скрипта
+$ python bars.py <path to JSON file>
+Пример выходных данных: 
+
+Biggest bars in JSON:
+1 bar:
+...
+<json data>
+...
+
+Smallest bars in JSON:
+1 bar:
+...
+<json data>
+...
+
+Please enter longitude: <your longitude>
+Please enter latitude: <your latitude>
+
+Closest bar was found!
+
+...
+<json data>
+...
 
 ```
 
