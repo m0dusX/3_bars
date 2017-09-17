@@ -17,7 +17,7 @@ def load_data(filepath):
         return json.load(current_json)["features"]
 
 
-def get_biggest_bar(all_bar_info):
+def get_biggest_bars(all_bar_info):
     minimum = get_seatscount(max(all_bar_info, 
     	key=lambda bar: get_seatscount(bar)))
     #В списке баров может быть несколько баров с максимальным числом мест,
@@ -27,7 +27,7 @@ def get_biggest_bar(all_bar_info):
     return all_biggest_bars
 
 
-def get_smallest_bar(all_bar_info):
+def get_smallest_bars(all_bar_info):
     bars_with_seats = [bar for bar in all_bar_info if get_seatscount(bar) > 0]
     minimum = get_seatscount(min(bars_with_seats, 
     	key=lambda bar: get_seatscount(bar)))
@@ -48,11 +48,11 @@ def get_closest_bar(all_bar_info, longitude, latitude):
 if __name__ == '__main__':
     current_json = load_data(sys.argv[1])
     print("Biggest bars in JSON:")
-    for idx, current_bar in enumerate(get_biggest_bar(current_json), 1):
+    for idx, current_bar in enumerate(get_biggest_bars(current_json), 1):
         print("{} bar:".format(idx))
         show_info(current_bar)
     print("Smallests bars in JSON:")
-    for idx, current_bar in enumerate(get_smallest_bar(current_json), 1):
+    for idx, current_bar in enumerate(get_smallest_bars(current_json), 1):
         print("{} bar:".format(idx))
         show_info(current_bar)
     longitude = float(input("Please enter longitude: "))
