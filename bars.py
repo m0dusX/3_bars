@@ -9,53 +9,39 @@ def show_info(bar):
 
 
 def get_seatscount(bar):
-    return bar.get("properties").get("Attributes").get("SeatsCount")
+    return bar["properties"]["Attributes"]["SeatsCount"]
 
 
 def load_data(filepath):
     with open (filepath, "r", encoding="utf-8") as current_json:
-        return json.load(current_json).get("features")
+        return json.load(current_json)["features"]
 
 
 def get_biggest_bar(all_bar_info):
-    """Return the biggest bar dict from list
-
-    Uses lambda function to get SeatsCount for every bar as key argument in 
-    max function & checks if there are more than one bars with max SeatsCount.
-
-    """
-    minimum = get_seatscount(max(all_bar_info, key=lambda bar: get_seatscount(bar)))
+    minimum = get_seatscount(max(all_bar_info, 
+    	key=lambda bar: get_seatscount(bar)))
+    #В списке баров может быть несколько баров с максимальным числом мест,
+    #поэтому проверяем это и возвращаем список баров.
     all_biggest_bars = [bar for bar in all_bar_info 
         if get_seatscount(bar) == minimum]
     return all_biggest_bars
 
 
 def get_smallest_bar(all_bar_info):
-    """Return the smallest bar dict from list
-
-    At first, all bars with zero SeatsCount are excluded from the list. Then 
-    lambda function is used to get SeatsCount for every bar as key argument in 
-    min function & checks if there are more than one bars with min SeatsCount.
-
-    """
     bars_with_seats = [bar for bar in all_bar_info if get_seatscount(bar) > 0]
-    minimum = get_seatscount(min(bars_with_seats, key=lambda bar: get_seatscount(bar)))
+    minimum = get_seatscount(min(bars_with_seats, 
+    	key=lambda bar: get_seatscount(bar)))
+    #В списке баров может быть несколько баров с минимальным числом мест,
+    #поэтому проверяем это и возвращаем список баров.
     all_smallest_bars= [bar for bar in all_bar_info
         if get_seatscount(bar) == minimum]
     return all_smallest_bars
 
 
 def get_closest_bar(all_bar_info, longitude, latitude):
-    """Return the closest bar dict from list
-
-    Uses vincenty function from geopy.distance module in lambda function to
-    calculate distance from user coordinates to current bar from all_bar_info
-    list.
-
-    """
     closest_bar = min(all_bar_info, key=lambda bar: 
-    	vincenty((longitude, latitude), (bar.get("geometry").get("coordinates")[0], 
-            bar.get("geometry").get("coordinates")[0])).miles)
+    	vincenty((longitude, latitude), (bar["geometry"]["coordinates"][0], 
+            bar["geometry"]["coordinates"][0])).miles)
     return closest_bar
 
 
@@ -65,7 +51,7 @@ if __name__ == '__main__':
     for idx, current_bar in enumerate(get_biggest_bar(current_json), 1):
         print("{} bar:".format(idx))
         show_info(current_bar)
-    print("Smallests bar in JSON:")
+    print("Smallests bars in JSON:")
     for idx, current_bar in enumerate(get_smallest_bar(current_json), 1):
         print("{} bar:".format(idx))
         show_info(current_bar)
@@ -73,5 +59,4 @@ if __name__ == '__main__':
     latitude = float(input("Please enter latitude: "))
     print("Closest bar was found!")
     show_info(get_closest_bar(current_json, longitude, latitude))
-    print("Press enter to exit the programm...")
-    input()
+    sys.exit()
